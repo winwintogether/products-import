@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductImportRequest;
 use App\Services\ProductsImport;
 use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Http\Request;
 
 
 class ProductController extends Controller
@@ -16,12 +18,18 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
-    public function csvImport(Request $request)
+    /**
+     * @param ProductImportRequest $request
+     * @return RedirectResponse
+     */
+    public function csvImport(ProductImportRequest $request)
     {
-        $request->validate([
-            'csv_file' => 'required|mimes:csv'
-        ]);
-        Excel::import(new ProductsImport, $request->file('csv_file'), null, \Maatwebsite\Excel\Excel::CSV);
-        return back()->with('success', 'CSV file imported successfully.');
+        try {
+            Excel::import(new ProductsImport, $request->file('import_file'), null, \Maatwebsite\Excel\Excel::CSV);
+            return back()->with('success', 'CSV file imported successfully.');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return back()->with('error', 'CSV file import failed.');
+        }
     }
 }

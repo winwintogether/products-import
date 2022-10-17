@@ -29,6 +29,14 @@
             </ul>
         </div>
     @endif
+    @if (\Session::has('error'))
+        <div class="alert alert-success fixed bottom-0 right-0 z-50">
+            <ul>
+                <li class=" rounded px-6 py-4 bg-red-500 text-white">{!! \Session::get('error') !!}</li>
+            </ul>
+        </div>
+    @endif
+
     <div class="relative flex items-center justify-center min-h-screen py-4 sm:pt-0 py-10">
         <div class="container">
             <div class="flex justify-end mb-5">
@@ -46,7 +54,7 @@
                         @endif
                     </div>
                     <div class="flex gap-2">
-                        <input type="file" placeholder="Choose CSV file" name="csv_file" class="border flex items-center p-2 rounded bg-gray-100 flex items-center">
+                        <input type="file" placeholder="Choose CSV file" name="import_file" class="border flex items-center p-2 rounded bg-gray-100 flex items-center">
                         <button type="submit" class="rounded rounded bg-gray-100 px-5 py-2 border">Import Product</button>
                     </div>
                 </form>
