@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Imports;
+namespace App\Services;
 
 use App\Models\Product;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -10,12 +10,12 @@ class ProductsImport implements ToCollection, WithHeadingRow
 {
 
     /**
-     * @param $rows
+     * @param $collection
      * @return void
      */
-    public function collection($rows)
+    public function collection( $collection ): void
     {
-        foreach ($rows as $row) {
+        foreach ($collection as $row) {
             $product = Product::updateOrCreate(
                 ['sku' => $row['sku']],
                 [
@@ -33,7 +33,7 @@ class ProductsImport implements ToCollection, WithHeadingRow
             );
 
             $this->addColours($product, $row);
-            $this->addAssins($product, $row);
+            $this->addAsins($product, $row);
         }
     }
 
@@ -42,7 +42,7 @@ class ProductsImport implements ToCollection, WithHeadingRow
      * @param $row
      * @return void
      */
-    public function addColours($product, $row)
+    public function addColours($product, $row): void
     {
         $colours = [];
         for ($i = 0; $i < 3; $i++) {
@@ -67,7 +67,7 @@ class ProductsImport implements ToCollection, WithHeadingRow
      * @param $row
      * @return void
      */
-    public function addAssins($product, $row)
+    public function addAsins($product, $row): void
     {
         $country_code = ["uk", "ca", "us", "fr", "de", "es", "it", "nl", "se"];
         foreach ($country_code as $code) {
