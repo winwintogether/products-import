@@ -22,82 +22,89 @@
     </style>
 </head>
 <body class="grid place-items-center">
-<div class="relative flex items-center justify-center min-h-screen py-4 sm:pt-0 py-10">
-    <div class="container">
-        <div class="flex justify-end mb-5">
-            <form action="{{ route('product.import') }}" method="POST" enctype="multipart/form-data">
-                {{ csrf_field() }}
-                <div>
-                    @if ($errors->any())
-                        <div class="alert alert-danger block text-red-500">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                </div>
-                <div class="flex gap-2">
-                    <input type="file" placeholder="Choose CSV file" name="csv_file" class="border flex items-center p-2 rounded bg-gray-100 flex items-center">
-                    <button type="submit" class="rounded rounded bg-gray-100 px-5 py-2 border">Import Product</button>
-                </div>
-            </form>
+    @if (\Session::has('success'))
+        <div class="alert alert-success fixed bottom-0 right-0 z-50">
+            <ul>
+                <li class=" rounded px-6 py-4 bg-green-500 text-white">{!! \Session::get('success') !!}</li>
+            </ul>
         </div>
-        @if($products->count())
-        <div class="overflow-x-auto relative">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th  scope="col" class="py-3 px-6">ID</th>
-                    <th  scope="col" class="py-3 px-6">Name</th>
-                    <th  scope="col" class="py-3 px-6">SKU</th>
-                    <th  scope="col" class="py-3 px-6">Stock</th>
-                    <th  scope="col" class="py-3 px-6">COG</th>
-                    <th  scope="col" class="py-3 px-6">Price</th>
-                    <th  scope="col" class="py-3 px-6">Length</th>
-                    <th  scope="col" class="py-3 px-6">Width</th>
-                    <th  scope="col" class="py-3 px-6">Height</th>
-                    <th  scope="col" class="py-3 px-6">Weight</th>
-                    <th  scope="col" class="py-3 px-6">Colours</th>
-                    <th  scope="col" class="py-3 px-6">Asins</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($products as $key=> $product)
-                <tr class="@if($key%2 === 0) bg-white  @else bg-gray-100 @endif border-b">
-                    <td>{{ $product->id }}</td>
-                    <th  scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">{{ $product->name }}</th>
-                    <td class="py-4 px-6">{{ $product->sku }}</td>
-                    <td class="py-4 px-6">{{ $product->stock }}</td>
-                    <td class="py-4 px-6">{{ $product->cog }}</td>
-                    <td class="py-4 px-6">{{ $product->price }}</td>
-                    <td class="py-4 px-6">{{ $product->length }}</td>
-                    <td class="py-4 px-6">{{ $product->width }}</td>
-                    <td class="py-4 px-6">{{ $product->height }}</td>
-                    <td class="py-4 px-6">{{ $product->weight }}</td>
-                    <td class="py-4 px-6">
-                        <div class="flex flex-wrap gap-2">
-                            @foreach ($product->attributes as $attribute) <span class="rounded inline-block bg-gray-100 px-3 py-1 text-sm">{{ $attribute->value }}</span> @endforeach
-                        </div>
-                    </td>
-                    <td class="py-4 px-6">
-                        <div class="flex flex-wrap gap-2">
-                            @foreach ($product->asins as $asin) <span class="rounded inline-block bg-gray-100 px-3 py-1 text-sm">{{ $asin->country_code }}_{{ $asin->asin }}</span> @endforeach
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+    @endif
+    <div class="relative flex items-center justify-center min-h-screen py-4 sm:pt-0 py-10">
+        <div class="container">
+            <div class="flex justify-end mb-5">
+                <form action="{{ route('product.import') }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div>
+                        @if ($errors->any())
+                            <div class="alert alert-danger block text-red-500">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="file" placeholder="Choose CSV file" name="csv_file" class="border flex items-center p-2 rounded bg-gray-100 flex items-center">
+                        <button type="submit" class="rounded rounded bg-gray-100 px-5 py-2 border">Import Product</button>
+                    </div>
+                </form>
+            </div>
 
-        <div class="flex items-center justify-center mt-6">
-            {{ $products->links() }}
+            @if($products->count())
+            <div class="overflow-x-auto relative">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th  scope="col" class="py-3 px-6">ID</th>
+                        <th  scope="col" class="py-3 px-6">Name</th>
+                        <th  scope="col" class="py-3 px-6">SKU</th>
+                        <th  scope="col" class="py-3 px-6">Stock</th>
+                        <th  scope="col" class="py-3 px-6">COG</th>
+                        <th  scope="col" class="py-3 px-6">Price</th>
+                        <th  scope="col" class="py-3 px-6">Length</th>
+                        <th  scope="col" class="py-3 px-6">Width</th>
+                        <th  scope="col" class="py-3 px-6">Height</th>
+                        <th  scope="col" class="py-3 px-6">Weight</th>
+                        <th  scope="col" class="py-3 px-6">Colours</th>
+                        <th  scope="col" class="py-3 px-6">Asins</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($products as $key=> $product)
+                    <tr class="@if($key%2 === 0) bg-white  @else bg-gray-100 @endif border-b">
+                        <td>{{ $product->id }}</td>
+                        <th  scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">{{ $product->name }}</th>
+                        <td class="py-4 px-6">{{ $product->sku }}</td>
+                        <td class="py-4 px-6">{{ $product->stock }}</td>
+                        <td class="py-4 px-6">{{ $product->cog }}</td>
+                        <td class="py-4 px-6">{{ $product->price }}</td>
+                        <td class="py-4 px-6">{{ $product->length }}</td>
+                        <td class="py-4 px-6">{{ $product->width }}</td>
+                        <td class="py-4 px-6">{{ $product->height }}</td>
+                        <td class="py-4 px-6">{{ $product->weight }}</td>
+                        <td class="py-4 px-6">
+                            <div class="flex flex-wrap gap-2">
+                                @foreach ($product->attributes as $attribute) <span class="rounded inline-block bg-gray-100 px-3 py-1 text-sm">{{ $attribute->value }}</span> @endforeach
+                            </div>
+                        </td>
+                        <td class="py-4 px-6">
+                            <div class="flex flex-wrap gap-2">
+                                @foreach ($product->asins as $asin) <span class="rounded inline-block bg-gray-100 px-3 py-1 text-sm">{{ $asin->country_code }}_{{ $asin->asin }}</span> @endforeach
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+                <div class="flex items-center justify-center mt-6">
+                    {{ $products->links() }}
+                </div>
+            </div>
+            @endif
         </div>
-        @endif
     </div>
-
-
-</div>
 </body>
 </html>
