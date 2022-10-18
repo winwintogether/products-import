@@ -19,4 +19,4 @@ Route::get('/', function () {
 });
 
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
-Route::post('/products', [ProductController::class, 'csvImport'])->name('product.import');
+Route::post('/products', [ProductController::class, 'import'])->name('product.import');

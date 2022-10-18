@@ -24,7 +24,7 @@ class ProductImportRequest extends FormRequest
     public function rules()
     {
         return [
-           'import_file' => 'required|mimes:csv'
+           'import_file' => 'required|mimes:csv,xls,xlsx,ods,xml',
         ];
     }
 }

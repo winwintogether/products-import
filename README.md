@@ -57,14 +57,18 @@ Things we might be looking for:
 - `phpunit.xml` - This file is responsible for defining the configuration of the PHPUnit.
 - `README.md` - This file is responsible for defining the documentation of the application.
 - `test/data/products.csv` - This file is responsible for defining the CSV file to be imported.
+- `test/data/products.ods` - This file is responsible for defining the ODS file to be imported.
+- `test/data/products.xls` - This file is responsible for defining the XLS file to be imported.
+- `test/data/products.xlsx` - This file is responsible for defining the XLSX file to be imported.
+- `test/data/products.xml` - This file is responsible for defining the XML file to be imported.
 
 ## Task completed
 
 - [x] Usage of composer / community packages
 - [x] Migrations / database design
-- [ ] Logging of errors
-- [ ] Ability to handle empty, malformed, or extremely large files
-- [ ] Potential to accept different file formats, i.e JSON or XML Documentation
+- [x] Logging of errors
+- [x] Ability to handle empty, malformed, or extremely large files
+- [x] Potential to accept different file formats, i.e JSON or XML Documentation ( supported: csv, xls, xlsx, ods, xml file)
 - [x] Validation
 - [x] Testing
 - [x] OOP / SOLID principles

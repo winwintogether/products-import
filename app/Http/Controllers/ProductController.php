@@ -22,14 +22,29 @@ class ProductController extends Controller
      * @param ProductImportRequest $request
      * @return RedirectResponse
      */
-    public function csvImport(ProductImportRequest $request)
+    public function import(ProductImportRequest $request)
     {
         try {
-            Excel::import(new ProductsImport, $request->file('import_file'), null, \Maatwebsite\Excel\Excel::CSV);
-            return back()->with('success', 'CSV file imported successfully.');
+            $this->importData($request->file('import_file'));
+            return back()->with('success', 'Products file imported successfully.');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return back()->with('error', 'CSV file import failed.');
+            return back()->with('error', 'Products file import failed.');
         }
+    }
+
+    public function importData($file)
+    {
+        $fileExtention = $file->getClientOriginalExtension();
+
+        $readerType = [
+            'csv' => \Maatwebsite\Excel\Excel::CSV,
+            'ods' => \Maatwebsite\Excel\Excel::ODS,
+            'xls' => \Maatwebsite\Excel\Excel::XLS,
+            'xlsx' => \Maatwebsite\Excel\Excel::XLSX,
+            'xml' => \Maatwebsite\Excel\Excel::XML,
+        ];
+
+        Excel::import(new ProductsImport, $file, null, $readerType[$fileExtention]);
     }
 }
