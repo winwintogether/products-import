@@ -44,13 +44,14 @@ Things we might be looking for:
 
 ## Application Structure
 
-- `app/Http/Controllers/ProductController.php` - This controller is responsible for displaying the form to upload CSV file, and products in the table.
+- `app/Http/Controllers/ProductController.php` - This controller is responsible for displaying the form to upload supported files, and products in the table.
 - `app/Models/Product.php` - This model is responsible for the database table.
-- `app/Services/ProductsImport.php` - This service is responsible for importing the CSV file to the database.
+- `app/Services/ProductsImport.php` - This service is responsible for importing the supported files to the database.
+- `app/Console/Commands/ImportProducts.php` - This command is responsible for importing the supported large files, but can't upload via the form interface to the database.
 - `database/migrations/2022_10_14_152325_create_products_table.php` - This migration is responsible for creating the database `products` table.
 - `database/migrations/2022_10_14_154003_create_product_attributes_table.php` - This migration is responsible for creating the database `product_attributes` table.
 - `database/migrations/2022_10_14_154107_create_product_asin_table.php` - This migration is responsible for creating the database `product_asin` table.
-- `resources/views/products/index.blade.php` - This view is responsible for displaying the form to upload CSV file and products in the table.
+- `resources/views/products/index.blade.php` - This view is responsible for displaying the form to upload supported file and products in the table.
 - `tests/Feature/ImportProductTest.php` - This test is responsible for testing the application.
 - `routes/web.php` - This file is responsible for defining the routes of the application.
 - `composer.json` - This file is responsible for defining the dependencies of the application.
@@ -68,7 +69,7 @@ Things we might be looking for:
 - [x] Migrations / database design
 - [x] Logging of errors
 - [x] Ability to handle empty, malformed, or extremely large files
-- [x] Potential to accept different file formats, i.e JSON or XML Documentation ( supported: csv, xls, xlsx, ods, xml file)
+- [x] Potential to accept different file formats, i.e JSON or XML Documentation ( supported: csv, xls, xlsx, ods, xml files)
 - [x] Validation
 - [x] Testing
 - [x] OOP / SOLID principles
