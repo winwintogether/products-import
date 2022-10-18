@@ -33,13 +33,21 @@ class ProductImporter extends Command
     {
         $file_path = $this->argument('file_path');
 
-        if($this->importData($file_path)) {
-            $this->info('Products import successful!');
+        if (file_exists($file_path)) {
+            try {
+                $this->importData($file_path);
+                $this->info('Products file imported successfully.');
+                return CommandAlias::SUCCESS;
+            } catch (\Exception $e) {
+                Log::error($e->getMessage());
+                $this->error('Products file import failed.');
+                return CommandAlias::FAILURE;
+            }
         } else {
-            $this->error('Products import failed!');
+            $this->error('File not found.');
+            Log::error('File '.$file_path.' not found.');
+            return CommandAlias::FAILURE;
         }
-
-        return Command::SUCCESS;
     }
 
     public function import($file)

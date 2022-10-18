@@ -32,11 +32,16 @@ Things we might be looking for:
 - Run `php artisan key:generate`
 - Setup database credentials in `.env` file
 - Run `php artisan migrate`
+
+## How to use
+
 - Run `php artisan serve`
 - Visit `http://localhost:8000/products`
-- Upload the CSV file with file `test/data/products.csv` in the root directory of the project.
+- Upload the CSV file with file `test/data/products.csv` in the `test/data/` folder of the project.
 - Click on `Import Product` button
 - You can see the imported products in the table
+- You can also import by command `php artisan product:import (file_path)` in the terminal to import the products from the supported files.
+- Current version supports (CSV, XLSX, XLS, ODS, XML) files, sample format you can see the example file in `test/data` folder.
 
 ## Testing
 
